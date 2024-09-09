@@ -28,3 +28,31 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+.user-list-link {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.user-list-link:hover {
+    background-color: #45a049;
+}
+
+.add-user-link {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    position: absolute;
+    margin-top: 1rem;
+}
+
+.add-user-link:hover {
+    background-color: #45a049;
+}
