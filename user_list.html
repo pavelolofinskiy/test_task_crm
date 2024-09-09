@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Users will be loaded here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const response = await fetch('get_users.php');
+            const users = await response.json();
+            
+            const tbody = document.querySelector('#userTable tbody');
+            tbody.innerHTML = users.data.map(user => `
+                <tr data-id="${user.id}">
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td><button onclick="editPassword(${user.id})">Edit Password</button></td>
+                </tr>
+            `).join('');
+        });
+
+        async function editPassword(userId) {
+            const newPassword = prompt('Enter new password:');
+            
+            if (newPassword) {
+                const response = await fetch('update_password.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: userId, password: newPassword })
+                });
+
+                const result = await response.json();
+                alert(result.status === 'success' ? 'Password updated successfully!' : `Error: ${result.message}`);
+            }
+        }
+    </script>
+</body>
+</html>
